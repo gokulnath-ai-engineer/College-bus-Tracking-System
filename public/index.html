@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>College Bus Tracker</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, sans-serif; background: #eef3f7; color: #17324d; }
+    header { padding: 24px; background: #123b5d; color: white; } main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; } .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px #17324d18; }
+    .value { font-size: 1.6rem; font-weight: 700; color: #087f8c; } li { margin: 8px 0; }
+  </style>
+</head>
+<body><header><h1>College Bus Tracking System</h1><p>Live student bus status</p></header><main><div id="app">Loading...</div></main>
+<script>
+fetch('/api/student/dashboard/STU-101').then((response) => response.json()).then((data) => {
+  document.querySelector('#app').innerHTML = `<div class="grid"><section class="card"><h2>${data.student.name}</h2><p>Pickup stop: ${data.pickup_stop.name}</p><p>Bus: ${data.assigned_bus.bus_no}</p><p class="value">ETA: ${data.eta_mins} minutes</p></section><section class="card"><h2>Route stops</h2><ul>${data.route.stops.map((stop) => `<li>${stop.name}</li>`).join('')}</ul></section></div>`;
+});
+</script></body></html>
